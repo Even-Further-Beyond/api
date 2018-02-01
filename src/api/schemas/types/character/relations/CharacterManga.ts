@@ -4,8 +4,8 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import Manga from './Manga';
-import Character from './Character';
+import Manga from '../../manga';
+import Character from '../index';
 
 const CharacterManga = new GraphQLObjectType({
   name: 'CharacterManga',

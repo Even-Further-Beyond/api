@@ -4,8 +4,8 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import Anime from './Anime';
-import Person from './Person';
+import Anime from '../../anime';
+import Person from '../../person';
 
 const AnimeStaff = new GraphQLObjectType({
   name: 'AnimeStaff',

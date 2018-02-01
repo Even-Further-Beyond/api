@@ -7,8 +7,9 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import PersonImage from './PersonImage';
-import Casting from './Casting';
+import PersonImage from './relations/PersonImage';
+
+import Casting from '../Casting';
 
 const Person = new GraphQLObjectType({
   name: 'Person',

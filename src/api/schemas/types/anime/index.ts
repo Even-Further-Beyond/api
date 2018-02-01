@@ -6,13 +6,15 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import AnimeGenre from './AnimeGenre';
-import AnimeImage from './AnimeImage';
-import Character from './Character';
-import Casting from './Casting';
-import Manga from './Manga';
-import AnimeRelation from './AnimeRelation';
-import AnimeStaff from './AnimeStaff';
+import AnimeGenre from './relations/AnimeGenre';
+import AnimeImage from './relations/AnimeImage';
+import AnimeStaff from './relations/AnimeStaff';
+import AnimeRelation from './relations/AnimeRelation';
+
+import Character from '../character';
+import Manga from '../manga';
+
+import Casting from '../Casting';
 
 const Anime = new GraphQLObjectType({
   name: 'Anime',

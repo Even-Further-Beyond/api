@@ -2,7 +2,7 @@ import {
   GraphQLID,
 } from 'graphql';
 
-import Character from '../types/Character';
+import Character from '../types/character';
 
 export default {
   type: Character,

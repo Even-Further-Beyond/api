@@ -4,9 +4,10 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import Anime from './Anime';
-import Person from './Person';
-import Character from './Character';
+import Anime from './anime';
+import Person from './person';
+import Character from './character';
+
 import Language from './Language';
 
 const Casting = new GraphQLObjectType({

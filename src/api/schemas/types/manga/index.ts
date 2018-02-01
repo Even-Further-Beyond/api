@@ -7,12 +7,13 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import MangaGenre from './MangaGenre';
-import MangaImage from './MangaImage';
-import Character from './Character';
-import MangaAuthor from './MangaAuthor';
-import Anime from './Anime';
-import MangaRelation from './MangaRelation';
+import MangaGenre from './relations/MangaGenre';
+import MangaImage from './relations/MangaImage';
+import MangaAuthor from './relations/MangaAuthor';
+import MangaRelation from './relations/MangaRelation';
+
+import Character from '../character';
+import Anime from '../anime';
 
 const Manga = new GraphQLObjectType({
   name: 'Manga',

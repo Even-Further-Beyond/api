@@ -2,7 +2,7 @@ import { GraphQLID } from 'graphql';
 import * as escape from 'pg-escape';
 import joinMonster from 'join-monster';
 
-import Character from '../types/Character';
+import Character from '../types/character';
 import Logger from '../../../core/Logger';
 
 const logger = new Logger(__filename);

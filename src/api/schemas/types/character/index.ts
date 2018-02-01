@@ -7,17 +7,19 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import Gender from './Gender';
-import HairLength from './HairLength';
-import AgeGroup from './AgeGroup';
-import Color from './Color';
-import Anime from './Anime';
-import Casting from './Casting';
-import CharacterTag from './CharacterTag';
-import CharacterImage from './CharacterImage';
-import CharacterAnime from './CharacterAnime';
-import CharacterManga from './CharacterManga';
-import Manga from './Manga';
+import Gender from './traits/Gender';
+import HairLength from './traits/HairLength';
+import AgeGroup from './traits/AgeGroup';
+import Color from './traits/Color';
+import CharacterTag from './traits/CharacterTag';
+
+import CharacterImage from './relations/CharacterImage';
+import CharacterAnime from './relations/CharacterAnime';
+import CharacterManga from './relations/CharacterManga';
+
+import Anime from '../anime';
+import Manga from '../manga';
+import Casting from '../Casting';
 
 const Character = new GraphQLObjectType({
   name: 'Character',
