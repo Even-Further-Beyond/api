@@ -5,17 +5,18 @@ import {
   GraphQLString,
 } from 'graphql';
 
-const Color = new GraphQLObjectType({
-  name: 'Color',
-  description: 'Object containing color information',
-  ['sqlTable' as string]: 'color',
+const MangaGenre = new GraphQLObjectType({
+  name: 'MangaGenre',
+  description: 'Object containing manga genre information',
+  ['sqlTable' as string]: 'manga_genre',
   ['uniqueKey' as string]: 'id',
   fields: () => {
     return {
       id: { type: new GraphQLNonNull(GraphQLID) },
       name: { type: new GraphQLNonNull(GraphQLString) },
+      description: { type: GraphQLString },
     };
   },
 });
 
-export default Color;
+export default MangaGenre;

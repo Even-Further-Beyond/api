@@ -5,10 +5,10 @@ import {
   GraphQLString,
 } from 'graphql';
 
-const Genre = new GraphQLObjectType({
-  name: 'Genre',
-  description: 'Object containing genre information',
-  ['sqlTable' as string]: 'genres',
+const AnimeGenre = new GraphQLObjectType({
+  name: 'AnimeGenre',
+  description: 'Object containing anime genre information',
+  ['sqlTable' as string]: 'anime_genre',
   ['uniqueKey' as string]: 'id',
   fields: () => {
     return {
@@ -19,4 +19,4 @@ const Genre = new GraphQLObjectType({
   },
 });
 
-export default Genre;
+export default AnimeGenre;

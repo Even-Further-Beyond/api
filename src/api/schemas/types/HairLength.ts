@@ -8,7 +8,7 @@ import {
 const HairLength = new GraphQLObjectType({
   name: 'HairLength',
   description: 'Object containing hair length information',
-  ['sqlTable' as string]: 'hair_lengths',
+  ['sqlTable' as string]: 'hair_length',
   ['uniqueKey' as string]: 'id',
   fields: () => {
     return {

@@ -8,11 +8,12 @@ import {
 } from 'graphql';
 
 import PersonImage from './PersonImage';
+import Casting from './Casting';
 
 const Person = new GraphQLObjectType({
   name: 'Person',
   description: 'Object containing person information',
-  ['sqlTable' as string]: 'people',
+  ['sqlTable' as string]: 'person',
   ['uniqueKey' as string]: ['id'],
   fields: () => {
     return {
@@ -22,12 +23,15 @@ const Person = new GraphQLObjectType({
         sqlDeps: ['mal_id'],
         resolve: (person) => person.mal_id,
       },
-      slug: { type: new GraphQLNonNull(GraphQLString) },
-      name: { type: new GraphQLNonNull(GraphQLString) },
-      alternativeNames: {
-        type: new GraphQLList(GraphQLString),
-        sqlDeps: ['alternative_names'],
-        resolve: (person) => person.alternative_names,
+      firstName: {
+        type: new GraphQLNonNull(GraphQLString),
+        sqlDeps: ['first_name'],
+        resolve: (person) => person.first_name,
+      },
+      lastName: {
+        type: GraphQLString,
+        sqlDeps: ['last_name'],
+        resolve: (person) => person.last_name,
       },
       givenName: {
         type: GraphQLString,
@@ -39,17 +43,30 @@ const Person = new GraphQLObjectType({
         sqlDeps: ['family_name'],
         resolve: (person) => person.family_name,
       },
-      birthday: { type: GraphQLString },
+      alternativeNames: {
+        type: new GraphQLList(GraphQLString),
+        sqlDeps: ['alternative_names'],
+        resolve: (person) => person.alternative_names,
+      },
+      birthday: {
+        type: GraphQLString,
+      },
+      website: {
+        type: GraphQLString,
+      },
+      description: {
+        type: GraphQLString,
+      },
       image: {
         type: PersonImage,
-        sqlJoin(peopleTable, peopleImagesTable) {
-          return `${peopleImagesTable}.id = ${peopleTable}.image_id`;
+        sqlJoin(personTable, personImageTable) {
+          return `${personImageTable}.id = ${personTable}.image_id`;
         },
       },
-      images: {
-        type: new GraphQLList(PersonImage),
-        sqlJoin(peopleTable, peopleImagesTable) {
-          return `${peopleImagesTable}.person_id = ${peopleTable}.id`;
+      castings: {
+        type: new GraphQLList(Casting),
+        sqlJoin(personTable, castingTable) {
+          return `${castingTable}.person_id = ${personTable}.id`;
         },
       },
       createdAt: {

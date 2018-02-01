@@ -8,7 +8,7 @@ import {
 const Language = new GraphQLObjectType({
   name: 'Language',
   description: 'Object containing language information',
-  ['sqlTable' as string]: 'languages',
+  ['sqlTable' as string]: 'language',
   ['uniqueKey' as string]: ['id'],
   fields: () => {
     return {

@@ -1,23 +1,66 @@
+import * as winston from 'winston';
+import * as moment from 'moment';
+import * as Knex from 'knex';
+import * as bodyParser from 'body-parser';
 
-import { bootstrapMicroframework } from 'microframework';
+import { Application } from 'express';
+import { createExpressServer } from 'routing-controllers';
+import { Model } from 'objection';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 
-import banner from './core/banner';
 import Logger from './core/Logger';
+import banner from './core/banner';
+import Environment from './core/Environment';
 
-import expressLoader from './loaders/expressLoader';
-import winstonLoader from './loaders/winstonLoader';
-import objectionLoader from './loaders/objectionLoader';
-import graphqlLoader from './loaders/graphqlLoader';
+import Schema from './api/schemas';
+import Models from './api/models';
 
 const logger = new Logger(__filename);
 
-bootstrapMicroframework({
-  loaders: [
-    winstonLoader,
-    expressLoader,
-    objectionLoader,
-    graphqlLoader,
+winston.configure({
+  transports: [
+    new winston.transports.Console({
+      level: Environment.log.level,
+      handleExceptions: true,
+      json: Environment.log.json,
+      timestamp: () => moment().format('YYYY-MM-DD HH:mm:ss.SSSS'),
+      colorize: Environment.isDevelopment,
+    }),
   ],
-})
-  .then(() => banner(logger))
-  .catch(error => logger.error(`Application has crashed: ${error}`));
+});
+
+const expressApp: Application = createExpressServer({
+  cors: true,
+  classTransformer: true,
+  routePrefix: Environment.app.routePrefix,
+  defaultErrorHandler: false,
+  middlewares: Environment.app.directories.middlewares,
+});
+
+expressApp.listen(Environment.app.port);
+
+const knex = Knex({
+  client: Environment.db.client,
+  connection: {
+    host: Environment.db.host,
+    user: Environment.db.user,
+    password: Environment.db.password,
+    database: Environment.db.name,
+  },
+});
+
+Model.knex(knex);
+
+expressApp.use(Environment.graphql.route, bodyParser.json(), graphqlExpress((req) => ({
+  context: {
+    knex,
+    Models,
+  },
+  schema: Schema,
+})));
+
+if (Environment.graphql.editor) {
+  expressApp.use('/graphiql', graphiqlExpress({endpointURL: Environment.graphql.route}));
+}
+
+banner(logger);

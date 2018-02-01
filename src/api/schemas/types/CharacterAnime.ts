@@ -10,20 +10,20 @@ import Character from './Character';
 const CharacterAnime = new GraphQLObjectType({
   name: 'CharacterAnime',
   description: 'Object containing character anime information',
-  ['sqlTable' as string]: 'characters_anime',
-  ['uniqueKey' as string]: ['id'], // Composite key doesn't work here, probably need to add unique id column
+  ['sqlTable' as string]: 'character_anime',
+  ['uniqueKey' as string]: ['character_id', 'anime_id'],
   fields: () => {
     return {
       character: {
         type: Character,
-        sqlJoin(charactersAnimeTable, characterTable) {
-          return `${characterTable}.id = ${charactersAnimeTable}.character_id`;
+        sqlJoin(characterAnimeTable, characterTable) {
+          return `${characterTable}.id = ${characterAnimeTable}.character_id`;
         },
       },
       anime: {
         type: Anime,
-        sqlJoin(charactersAnimeTable, animeTable) {
-          return `${animeTable}.id = ${charactersAnimeTable}.anime_id`;
+        sqlJoin(characterAnimeTable, animeTable) {
+          return `${animeTable}.id = ${characterAnimeTable}.anime_id`;
         },
       },
       role: { type: new GraphQLNonNull(GraphQLString) },
@@ -31,11 +31,6 @@ const CharacterAnime = new GraphQLObjectType({
         type: GraphQLString,
         sqlDeps: ['created_at'],
         resolve: (characterAnime) => characterAnime.created_at,
-      },
-      updatedAt: {
-        type: GraphQLString,
-        sqlDeps: ['updated_at'],
-        resolve: (characterAnime) => characterAnime.updated_at,
       },
     };
   },

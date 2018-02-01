@@ -2,18 +2,18 @@ import { GraphQLID } from 'graphql';
 import * as escape from 'pg-escape';
 import joinMonster from 'join-monster';
 
-import Character from '../types/Character';
+import Person from '../types/Person';
 import Logger from '../../../core/Logger';
 
 const logger = new Logger(__filename);
 
 export default {
-  type: Character,
-  description: 'Get a single character by id',
+  type: Person,
+  description: 'Get a single person by id',
   args: { id: { type: GraphQLID } },
-  where: (characterTable, args) => {
+  where: (personTable, args) => {
     if (args.id) {
-      return escape(`${characterTable}.id = %L`, args.id);
+      return escape(`${personTable}.id = %L`, args.id);
     }
   },
   resolve: (parent, args, { knex }, info) => {

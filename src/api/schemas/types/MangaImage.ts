@@ -5,30 +5,30 @@ import {
   GraphQLString,
 } from 'graphql';
 
-const AnimeImage = new GraphQLObjectType({
-  name: 'AnimeImage',
-  description: 'Object containing anime image information',
-  ['sqlTable' as string]: 'anime_image',
+const MangaImage = new GraphQLObjectType({
+  name: 'MangaImage',
+  description: 'Object containing manga image information',
+  ['sqlTable' as string]: 'manga_image',
   ['uniqueKey' as string]: 'id',
   fields: () => {
     return {
-      animeId: {
+      mangaId: {
         type: new GraphQLNonNull(GraphQLID),
-        sqlDeps: ['anime_id'],
-        resolve: (animeImage) => animeImage.anime_id,
+        sqlDeps: ['manga_id'],
+        resolve: (mangaImage) => mangaImage.manga_id,
       },
       imagePath: {
         type: new GraphQLNonNull(GraphQLString),
         sqlDeps: ['image_path'],
-        resolve: (animeImage) => animeImage.image_path,
+        resolve: (mangaImage) => mangaImage.image_path,
       },
       createdAt: {
         type: new GraphQLNonNull(GraphQLString),
         sqlDeps: ['created_at'],
-        resolve: (animeImage) => animeImage.created_at,
+        resolve: (mangaImage) => mangaImage.created_at,
       },
     };
   },
 });
 
-export default AnimeImage;
+export default MangaImage;

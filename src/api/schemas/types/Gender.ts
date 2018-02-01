@@ -8,7 +8,7 @@ import {
 const Gender = new GraphQLObjectType({
   name: 'Gender',
   description: 'Object containing gender information',
-  ['sqlTable' as string]: 'genders',
+  ['sqlTable' as string]: 'gender',
   ['uniqueKey' as string]: 'id',
   fields: () => {
     return {

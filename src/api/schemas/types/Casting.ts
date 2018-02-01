@@ -2,7 +2,6 @@ import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLString,
-  GraphQLBoolean,
 } from 'graphql';
 
 import Anime from './Anime';
@@ -13,7 +12,7 @@ import Language from './Language';
 const Casting = new GraphQLObjectType({
   name: 'Casting',
   description: 'Object containing casting information',
-  ['sqlTable' as string]: 'castings',
+  ['sqlTable' as string]: 'casting',
   ['uniqueKey' as string]: ['id'],
   fields: () => {
     return {
@@ -42,11 +41,6 @@ const Casting = new GraphQLObjectType({
         },
       },
       role: { type: new GraphQLNonNull(GraphQLString) },
-      isVoiceActor: {
-        type: new GraphQLNonNull(GraphQLBoolean),
-        sqlDeps: ['is_voice_actor'],
-        resolve: (casting) => casting.is_voice_actor,
-      },
       createdAt: {
         type: GraphQLString,
         sqlDeps: ['created_at'],

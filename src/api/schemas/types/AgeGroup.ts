@@ -8,7 +8,7 @@ import {
 const AgeGroup = new GraphQLObjectType({
   name: 'AgeGroup',
   description: 'Object containing age group information',
-  ['sqlTable' as string]: 'age_groups',
+  ['sqlTable' as string]: 'age_group',
   ['uniqueKey' as string]: 'id',
   fields: () => {
     return {

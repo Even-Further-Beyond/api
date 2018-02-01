@@ -6,10 +6,10 @@ import {
   GraphQLBoolean,
 } from 'graphql';
 
-const Tag = new GraphQLObjectType({
+const CharacterTag = new GraphQLObjectType({
   name: 'Tag',
   description: 'Object containing tag information',
-  ['sqlTable' as string]: 'tags',
+  ['sqlTable' as string]: 'character_tag',
   ['uniqueKey' as string]: 'id',
   fields: () => {
     return {
@@ -41,4 +41,4 @@ const Tag = new GraphQLObjectType({
   },
 });
 
-export default Tag;
+export default CharacterTag;

@@ -8,7 +8,7 @@ import {
 const PersonImage = new GraphQLObjectType({
   name: 'PersonImage',
   description: 'Object containing person image information',
-  ['sqlTable' as string]: 'people_images',
+  ['sqlTable' as string]: 'person_image',
   ['uniqueKey' as string]: ['id'],
   fields: () => {
     return {

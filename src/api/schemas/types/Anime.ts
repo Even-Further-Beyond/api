@@ -6,9 +6,13 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import Genre from './Genre';
+import AnimeGenre from './AnimeGenre';
 import AnimeImage from './AnimeImage';
 import Character from './Character';
+import Casting from './Casting';
+import Manga from './Manga';
+import AnimeRelation from './AnimeRelation';
+import AnimeStaff from './AnimeStaff';
 
 const Anime = new GraphQLObjectType({
   name: 'Anime',
@@ -19,7 +23,6 @@ const Anime = new GraphQLObjectType({
     return {
       id: {
         type: new GraphQLNonNull(GraphQLID),
-        description: 'The unique ID of the anime',
       },
       malId: {
         type: new GraphQLNonNull(GraphQLID),
@@ -27,45 +30,42 @@ const Anime = new GraphQLObjectType({
         sqlDeps: ['mal_id'],
         resolve: (anime) => anime.mal_id,
       },
-      slug: {
-        type: GraphQLString,
-        description: 'The unique slug of the anime',
-      },
       mainTitle: {
         type: GraphQLString,
-        description: 'The main title of the anime used by MAL',
         sqlDeps: ['main_title'],
         resolve: (anime) => anime.main_title,
       },
       englishTitle: {
         type: GraphQLString,
-        description: 'The English title of the anime',
         sqlDeps: ['english_title'],
         resolve: (anime) => anime.english_title,
       },
       japaneseTitle: {
         type: GraphQLString,
-        description: 'The Japanese title of the anime',
         sqlDeps: ['japanese_title'],
         resolve: (anime) => anime.japanese_title,
       },
-      synonyms: {
+      alternativeTitles: {
         type: new GraphQLList(GraphQLString),
-        description: 'The other titles the anime might go by',
+        sqlDeps: ['alternative_titles'],
+        resolve: (anime) => anime.alternative_titles,
       },
-      seriesType: {
+      synopsis: {
         type: GraphQLString,
-        description: 'The series type (TV, ONA, OVA, Movie, Special)',
-        sqlDeps: ['series_type'],
-        resolve: (anime) => anime.series_type,
+      },
+      spoilers: {
+        type: new GraphQLList(GraphQLString),
+      },
+      type: {
+        type: GraphQLString,
+        description: '(TV, ONA, OVA, Movie, Special)',
       },
       episodes: {
         type: GraphQLString,
-        description: 'The episode count number of the anime',
       },
       status: {
         type: GraphQLString,
-        description: 'The airing status of the anime (Not yet aired, Currently Airing, Finished Airing)',
+        description: '(Not yet aired, Currently Airing, Finished Airing)',
       },
       aired: {
         type: GraphQLString,
@@ -75,23 +75,22 @@ const Anime = new GraphQLObjectType({
         type: GraphQLString,
         description: 'The season in which this anime premiered (Ex: Spring 1998)',
       },
+      broadcast: {
+        type: GraphQLString,
+        description: 'The day and time when this anime airs (Ex: Wednesdays at 11:30 (JST))',
+      },
       producers: {
         type: new GraphQLList(GraphQLString),
-        description: 'The producers involved in the making of anime',
       },
       licensors: {
         type: new GraphQLList(GraphQLString),
-        description: 'The licensors of the anime',
       },
       studios: {
         type: new GraphQLList(GraphQLString),
-        description: 'The studios involved in the making of this anime',
       },
-      sourceType: {
+      source: {
         type: GraphQLString,
-        description: 'The source type of the anime (Original, Manga, Light novel, Novel, Game)',
-        sqlDeps: ['source_type'],
-        resolve: (anime) => anime.source_type,
+        description: '(Original, Manga, Light novel, Novel, Game)',
       },
       duration: {
         type: GraphQLString,
@@ -99,19 +98,28 @@ const Anime = new GraphQLObjectType({
       },
       contentRating: {
         type: GraphQLString,
-        description: 'The content rating of the anime (Nonem, PG, G, PG-13, R-17+, R+, Rx)',
+        description: '(None, PG, G, PG-13, R-17+, R+, Rx)',
         sqlDeps: ['content_rating'],
         resolve: (anime) => anime.content_rating,
       },
-      synopsis: {
-        type: GraphQLString,
-        description: 'The synopsis of the anime',
+      openings: {
+        type: new GraphQLList(GraphQLString),
+        description: 'Opening themes of the anime',
+      },
+      endings: {
+        type: new GraphQLList(GraphQLString),
+        description: 'Ending themes of the anime',
+      },
+      image: {
+        type: AnimeImage,
+        sqlJoin(animeTable, animeImageTable) {
+          return `${animeImageTable}.id = ${animeTable}.image_id`;
+        },
       },
       genres: {
-        type: new GraphQLList(Genre),
-        description: 'The genres of the anime',
+        type: new GraphQLList(AnimeGenre),
         junction: {
-          sqlTable: 'anime_genres',
+          sqlTable: 'anime_anime_genre',
           sqlJoins: [
             (animeTable, animeGenresTable) =>
               `${animeTable}.id = ${animeGenresTable}.anime_id`,
@@ -122,40 +130,53 @@ const Anime = new GraphQLObjectType({
       },
       characters: {
         type: new GraphQLList(Character),
-        description: 'The characters that appear in this anime',
         junction: {
-          sqlTable: 'characters_anime',
+          sqlTable: 'character_anime',
           sqlJoins: [
-            (animeTable, charactersAnimeTable) =>
-              `${animeTable}.id = ${charactersAnimeTable}.anime_id`,
-            (charactersAnimeTable, charactersTable) =>
-              `${charactersAnimeTable}.character_id = ${charactersTable}.id`,
+            (animeTable, characterAnimeTable) =>
+              `${animeTable}.id = ${characterAnimeTable}.anime_id`,
+            (characterAnimeTable, characterTable) =>
+              `${characterAnimeTable}.character_id = ${characterTable}.id`,
           ],
         },
       },
-      image: {
-        type: AnimeImage,
-        description: 'The default image of the anime used by MAL',
-        sqlJoin(animeTable, animeImagesTable) {
-          return `${animeImagesTable}.id = ${animeTable}.image_id`;
+      staff: {
+        type: new GraphQLList(AnimeStaff),
+        sqlJoin(animeTable, animeStaffTable) {
+          return `${animeStaffTable}.anime_id = ${animeTable}.id`;
         },
       },
-      images: {
-        type: new GraphQLList(AnimeImage),
-        description: 'The other images of the anime used on MAL',
-        sqlJoin(animeTable, animeImagesTable) {
-          return `${animeImagesTable}.anime_id = ${animeTable}.id`;
+      adaptations: {
+        type: new GraphQLList(Manga),
+        junction: {
+          sqlTable: 'adaptation',
+          sqlJoins: [
+            (animeTable, adaptationTable) =>
+              `${animeTable}.id = ${adaptationTable}.anime_id`,
+            (adaptationTable, mangaTable) =>
+              `${adaptationTable}.manga_id = ${mangaTable}.id`,
+          ],
+        },
+      },
+      relations: {
+        type: new GraphQLList(AnimeRelation),
+        sqlJoin(animeTable, animeRelationTable) {
+          return `${animeRelationTable}.parent_id = ${animeTable}.id`;
+        },
+      },
+      castings: {
+        type: new GraphQLList(Casting),
+        sqlJoin(animeTable, castingTable) {
+          return `${castingTable}.anime_id = ${animeTable}.id`;
         },
       },
       createdAt: {
         type: GraphQLString,
-        description: 'The creation date for this anime record (internal use)',
         sqlDeps: ['created_at'],
         resolve: (anime) => anime.created_at,
       },
       updatedAt: {
         type: GraphQLString,
-        description: 'The last updated date for this anime record (internal use)',
         sqlDeps: ['updated_at'],
         resolve: (anime) => anime.updated_at,
       },

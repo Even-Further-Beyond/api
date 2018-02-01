@@ -5,7 +5,6 @@ import {
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLFloat,
 } from 'graphql';
 
 import Gender from './Gender';
@@ -14,175 +13,165 @@ import AgeGroup from './AgeGroup';
 import Color from './Color';
 import Anime from './Anime';
 import Casting from './Casting';
-import Tag from './Tag';
+import CharacterTag from './CharacterTag';
 import CharacterImage from './CharacterImage';
 import CharacterAnime from './CharacterAnime';
+import CharacterManga from './CharacterManga';
+import Manga from './Manga';
 
 const Character = new GraphQLObjectType({
   name: 'Character',
   description: 'Object containing character information',
-  ['sqlTable' as string]: 'characters',
+  ['sqlTable' as string]: 'character',
   ['uniqueKey' as string]: 'id',
   fields: () => {
     return {
       id: {
         type: new GraphQLNonNull(GraphQLID),
-        description: 'The unique ID of the character',
       },
       malId: {
         type: GraphQLInt,
-        description: 'The unique MAL (MyAnimeList) ID of the character',
         sqlDeps: ['mal_id'],
         resolve: (character) => character.mal_id,
       },
-      slug: {
-        type: new GraphQLNonNull(GraphQLString),
-        description: 'The unique slug of the character',
-      },
       name: {
         type: new GraphQLNonNull(GraphQLString),
-        description: 'The name of the character',
       },
       japaneseName: {
         type: GraphQLString,
-        description: 'The Japanese name of the character',
         sqlDeps: ['japanese_name'],
         resolve: (character) => character.japanese_name,
       },
       alternativeNames: {
         type: new GraphQLList(GraphQLString),
-        description: 'The alternative names of the character',
         sqlDeps: ['alternative_names'],
         resolve: (character) => character.alternative_names,
       },
       description: {
         type: GraphQLString,
-        description: 'The description of the character',
       },
-      ageStart: {
-        type: GraphQLFloat,
-        sqlDeps: ['age_start'],
-        resolve: (character) => character.age_start,
-      },
-      ageEnd: {
-        type: GraphQLFloat,
-        sqlDeps: ['age_end'],
-        resolve: (character) => character.age_end,
-      },
-      heightStart: {
-        type: GraphQLFloat,
-        sqlDeps: ['height_start'],
-        resolve: (character) => character.height_start,
-      },
-      heightEnd: {
-        type: GraphQLFloat,
-        sqlDeps: ['height_end'],
-        resolve: (character) => character.height_end,
-      },
-      weightStart: {
-        type: GraphQLFloat,
-        sqlDeps: ['weight_start'],
-        resolve: (character) => character.weight_start,
-      },
-      weightEnd: {
-        type: GraphQLFloat,
-        sqlDeps: ['weight_end'],
-        resolve: (character) => character.weight_end,
+      spoilers: {
+        type: GraphQLString,
       },
       gender: {
         type: Gender,
-        sqlJoin(charactersTable, gendersTable) {
-          return `${gendersTable}.id = ${charactersTable}.gender_id`;
-        },
-      },
-      hairLength: {
-        type: HairLength,
-        sqlJoin(charactersTable, hairLengthsTable) {
-          return `${hairLengthsTable}.id = ${charactersTable}.hair_length_id`;
+        sqlTable: 'gender',
+        sqlJoin(characterTable, genderTable) {
+          return `${genderTable}.id = ${characterTable}.gender_id`;
         },
       },
       ageGroups: {
         type: new GraphQLList(AgeGroup),
         junction: {
-          sqlTable: 'characters_age_groups',
+          sqlTable: 'character_age_group',
           sqlJoins: [
-            (charactersTable, charactersAgeGroupsTable) =>
-              `${charactersTable}.id = ${charactersAgeGroupsTable}.character_id`,
-            (charactersAgeGroupsTable, ageGroupTable) =>
-              `${charactersAgeGroupsTable}.age_group_id = ${ageGroupTable}.id`,
+            (characterTable, charactersAgeGroupTable) =>
+              `${characterTable}.id = ${charactersAgeGroupTable}.character_id`,
+            (charactersAgeGroupTable, ageGroupTable) =>
+              `${charactersAgeGroupTable}.age_group_id = ${ageGroupTable}.id`,
+          ],
+        },
+      },
+      hairLengths: {
+        type: HairLength,
+        junction: {
+          sqlTable: 'character_hair_length',
+          sqlJoins: [
+            (characterTable, characterHairLengthTable) =>
+              `${characterTable}.id = ${characterHairLengthTable}.character_id`,
+            (characterHairLengthTable, hairLengthTable) =>
+              `${characterHairLengthTable}.hair_length_id = ${hairLengthTable}.id`,
           ],
         },
       },
       hairColors: {
         type: new GraphQLList(Color),
         junction: {
-          sqlTable: 'characters_hair_colors',
+          sqlTable: 'character_hair_color',
           sqlJoins: [
-            (charactersTable, charactersHairColorsTable) =>
-              `${charactersTable}.id = ${charactersHairColorsTable}.character_id`,
-            (charactersHairColorsTable, colorsTable) =>
-              `${charactersHairColorsTable}.color_id = ${colorsTable}.id`,
+            (characterTable, characterHairColorTable) =>
+              `${characterTable}.id = ${characterHairColorTable}.character_id`,
+            (characterHairColorTable, colorTable) =>
+              `${characterHairColorTable}.hair_color_id = ${colorTable}.id`,
           ],
         },
       },
       eyeColors: {
         type: new GraphQLList(Color),
         junction: {
-          sqlTable: 'characters_eye_colors',
+          sqlTable: 'character_eye_color',
           sqlJoins: [
-            (charactersTable, charactersEyeColorsTable) =>
-              `${charactersTable}.id = ${charactersEyeColorsTable}.character_id`,
-            (charactersEyeColorsTable, colorsTable) =>
-              `${charactersEyeColorsTable}.color_id = ${colorsTable}.id`,
+            (characterTable, characterEyeColorTable) =>
+              `${characterTable}.id = ${characterEyeColorTable}.character_id`,
+            (characterEyeColorTable, colorTable) =>
+              `${characterEyeColorTable}.eye_color_id = ${colorTable}.id`,
           ],
-        },
-      },
-      anime: {
-        type: new GraphQLList(Anime),
-        junction: {
-          sqlTable: 'characters_anime',
-          sqlJoins: [
-            (charactersTable, charactersAnimeTable) =>
-              `${charactersTable}.id = ${charactersAnimeTable}.character_id`,
-            (charactersAnimeTable, animeTable) =>
-              `${charactersAnimeTable}.anime_id = ${animeTable}.id`,
-          ],
-        },
-      },
-      animeAndRoles: {
-        type: new GraphQLList(CharacterAnime),
-        sqlJoin(charactersTable, animeAndRolesTable) {
-          return `${animeAndRolesTable}.character_id = ${charactersTable}.id`;
         },
       },
       tags: {
-        type: new GraphQLList(Tag),
+        type: new GraphQLList(CharacterTag),
         junction: {
-          sqlTable: 'characters_tags',
+          sqlTable: 'character_character_tag',
           sqlJoins: [
-            (charactersTable, charactersTagsTable) =>
-              `${charactersTable}.id = ${charactersTagsTable}.character_id`,
-            (charactersTagsTable, tagsTable) =>
-              `${charactersTagsTable}.tag_id = ${tagsTable}.id`,
+            (characterTable, characterCharacterTagTable) =>
+              `${characterTable}.id = ${characterCharacterTagTable}.character_id`,
+            (characterCharacterTagTable, tagTable) =>
+              `${characterCharacterTagTable}.tag_id = ${tagTable}.id`,
           ],
         },
       },
       image: {
         type: CharacterImage,
-        sqlJoin(charactersTable, charactersImagesTable) {
-          return `${charactersImagesTable}.id = ${charactersTable}.image_id`;
+        sqlJoin(characterTable, characterImageTable) {
+          return `${characterImageTable}.id = ${characterTable}.image_id`;
         },
       },
       images: {
         type: new GraphQLList(CharacterImage),
-        sqlJoin(charactersTable, charactersImagesTable) {
-          return `${charactersImagesTable}.character_id = ${charactersTable}.id`;
+        sqlJoin(characterTable, characterImageTable) {
+          return `${characterImageTable}.character_id = ${characterTable}.id`;
+        },
+      },
+      anime: {
+        type: new GraphQLList(Anime),
+        junction: {
+          sqlTable: 'character_anime',
+          sqlJoins: [
+            (characterTable, characterAnimeTable) =>
+              `${characterTable}.id = ${characterAnimeTable}.character_id`,
+            (characterAnimeTable, animeTable) =>
+              `${characterAnimeTable}.anime_id = ${animeTable}.id`,
+          ],
+        },
+      },
+      animeAndRoles: {
+        type: new GraphQLList(CharacterAnime),
+        sqlJoin(characterTable, characterAnimeTable) {
+          return `${characterAnimeTable}.character_id = ${characterTable}.id`;
+        },
+      },
+      manga: {
+        type: new GraphQLList(Manga),
+        junction: {
+          sqlTable: 'character_manga',
+          sqlJoins: [
+            (characterTable, characterMangaTable) =>
+              `${characterTable}.id = ${characterMangaTable}.character_id`,
+            (characterMangaTable, mangaTable) =>
+              `${characterMangaTable}.manga_id = ${mangaTable}.id`,
+          ],
+        },
+      },
+      mangaAndRoles: {
+        type: new GraphQLList(CharacterManga),
+        sqlJoin(characterTable, characterMangaTable) {
+          return `${characterMangaTable}.character_id = ${characterTable}.id`;
         },
       },
       castings: {
         type: new GraphQLList(Casting),
-        sqlJoin(charactersTable, castingsTable) {
-          return `${castingsTable}.character_id = ${charactersTable}.id`;
+        sqlJoin(characterTable, castingTable) {
+          return `${castingTable}.character_id = ${characterTable}.id`;
         },
       },
       createdAt: {
