@@ -2443,6 +2443,13 @@ INSERT INTO "public"."manga_genre" ("id", "name", "description") VALUES ('43', '
 INSERT INTO "public"."manga_genre" ("id", "name", "description") VALUES ('44', 'Gender Bender', NULL);
 INSERT INTO "public"."manga_genre" ("id", "name", "description") VALUES ('45', 'Thriller', NULL);
 
+-- images
+INSERT INTO "public"."manga_image" ("id", "manga_id", "image_path", "mal_link", "created_at") VALUES ('1', '1', 'dfc6432967-1.jpg', 'https://myanimelist.cdn-dena.com/images/manga/3/54525.jpg', '2018-01-08 20:30:58.632654');
+INSERT INTO "public"."person_image" ("id", "person_id", "image_path", "mal_link", "created_at") VALUES ('1', '1', 'e336ce6e2b-1.jpg', 'https://myanimelist.cdn-dena.com/images/voiceactors/3/44649.jpg', '2018-01-08 17:19:16.617714');
+INSERT INTO "public"."anime_image" ("id", "anime_id", "image_path", "mal_link", "created_at") VALUES ('1', '1', '9819185a8c-1.jpg', 'https://myanimelist.cdn-dena.com/images/anime/4/19644.jpg', '2018-01-07 13:13:39.970474');
+INSERT INTO "public"."character_image" ("id", "character_id", "image_path", "mal_link", "created_at") VALUES ('1', '1', '81a41a89ed-1.jpg', 'https://myanimelist.cdn-dena.com/images/characters/4/50197.jpg', '2018-01-12 01:02:13.219152');
+
+
 -- Anime id of 1
 INSERT INTO "public"."anime" ("id", "mal_id", "main_title", "english_title", "japanese_title", "alternative_titles", "synopsis", "spoilers", "type", "episodes", "status", "premiered", "broadcast", "producers", "licensors", "studios", "source", "duration", "content_rating", "openings", "endings", "image_id", "created_at", "updated_at", "aired") VALUES ('1', '1', 'Cowboy Bebop', 'Cowboy Bebop', 'カウボーイビバップ', NULL, 'In the year 2071, humanity has colonized several of the planets and moons of the solar system leaving the now uninhabitable surface of planet Earth behind. The Inter Solar System Police attempts to keep peace in the galaxy, aided in part by outlaw bounty hunters, referred to as "Cowboys." The ragtag team aboard the spaceship Bebop are two such individuals.', NULL, 'TV', '26', 'Finished Airing', 'Spring 1998', 'Saturdays at 01:00 (JST)', '{"Bandai Visual"}', '{Funimation,"Bandai Entertainment"}', '{Sunrise}', 'Original', '24 min. per ep.', 'R - 17+ (violence & profanity)', '{"\"Tank!\" by The Seatbelts (eps 1-25)"}', '{"#1: \"The Real Folk Blues\" by The Seatbelts feat. Mai Yamane (eps 1-12, 14-25)","#2: \"Space Lion\" by The Seatbelts (ep 13)","#3: \"Blue\" by The Seatbelts feat. Mai Yamane (ep 26)"}', '1', '2018-01-07 13:03:53.038573', '2018-01-31 20:35:17.957856', 'Apr 3, 1998 to Apr 24, 1999');
 INSERT INTO "public"."anime_anime_genre" ("anime_id", "genre_id", "created_at") VALUES ('1', '1', '2018-01-07 13:33:35.611402');
@@ -2451,7 +2458,6 @@ INSERT INTO "public"."anime_anime_genre" ("anime_id", "genre_id", "created_at") 
 INSERT INTO "public"."anime_anime_genre" ("anime_id", "genre_id", "created_at") VALUES ('1', '8', '2018-01-07 13:33:35.611402');
 INSERT INTO "public"."anime_anime_genre" ("anime_id", "genre_id", "created_at") VALUES ('1', '24', '2018-01-07 13:33:35.611402');
 INSERT INTO "public"."anime_anime_genre" ("anime_id", "genre_id", "created_at") VALUES ('1', '29', '2018-01-07 13:33:35.611402');
-INSERT INTO "public"."anime_image" ("id", "anime_id", "image_path", "mal_link", "created_at") VALUES ('1', '1', '9819185a8c-1.jpg', 'https://myanimelist.cdn-dena.com/images/anime/4/19644.jpg', '2018-01-07 13:13:39.970474');
 
 -- Character id of 1
 INSERT INTO "public"."character" ("id", "mal_id", "name", "japanese_name", "alternative_names", "description", "spoilers", "gender_id", "image_id", "created_at", "updated_at") VALUES ('1', '1', 'Spike Spiegel', 'スパイク・スピーゲル', NULL, 'Birthdate: June 26, 2044
@@ -2464,10 +2470,7 @@ Spike Spiegel is a tall and lean 27-year-old bounty hunter born on Mars. The ins
 ', NULL, '1', '1', '2018-01-09 23:56:54.885018', '2018-01-09 23:56:54.885018');
 
 INSERT INTO "public"."character_age_group" ("character_id", "age_group_id", "created_at") VALUES ('1', '4', '2018-01-12 23:03:25.182278');
-
 INSERT INTO "public"."character_anime" ("character_id", "anime_id", "role", "created_at") VALUES ('1', '1', 'Main', '2018-01-11 13:38:54.723615');
--- INSERT INTO "public"."character_anime" ("character_id", "anime_id", "role", "created_at") VALUES ('1', '2', 'Main', '2018-01-11 13:38:54.723615');
--- INSERT INTO "public"."character_anime" ("character_id", "anime_id", "role", "created_at") VALUES ('1', '3457', 'Main', '2018-01-11 13:38:54.723615');
 
 INSERT INTO "public"."character_character_tag" ("character_id", "tag_id", "created_at") VALUES ('1', '192', '2018-01-12 23:03:25.322341');
 INSERT INTO "public"."character_character_tag" ("character_id", "tag_id", "created_at") VALUES ('1', '227', '2018-01-12 23:03:25.325173');
@@ -2476,28 +2479,10 @@ INSERT INTO "public"."character_character_tag" ("character_id", "tag_id", "creat
 INSERT INTO "public"."character_character_tag" ("character_id", "tag_id", "created_at") VALUES ('1', '312', '2018-01-12 23:03:25.325925');
 
 INSERT INTO "public"."character_hair_color" ("character_id", "hair_color_id", "created_at") VALUES ('1', '2', '2018-01-12 23:03:25.327507');
-INSERT INTO "public"."character_image" ("id", "character_id", "image_path", "mal_link", "created_at") VALUES ('1', '1', '81a41a89ed-1.jpg', 'https://myanimelist.cdn-dena.com/images/characters/4/50197.jpg', '2018-01-12 01:02:13.219152');
-
-INSERT INTO "public"."character_manga" ("character_id", "manga_id", "role", "created_at") VALUES ('1', '169', 'Main', '2018-01-11 01:06:40.64324');
-INSERT INTO "public"."character_manga" ("character_id", "manga_id", "role", "created_at") VALUES ('1', '170', 'Main', '2018-01-11 01:06:40.64324');
-
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '11', '1', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '12', '2', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '767', '3', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '1076', '8', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '1596', '6', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '6859', '7', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '8180', '4', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '8875', '5', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '12442', '10', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '16763', '6', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '17437', '5', '2018-01-12 01:04:15.818426');
--- INSERT INTO "public"."character_voice_actor" ("character_id", "person_id", "language_id", "created_at") VALUES ('1', '17889', '4', '2018-01-12 01:04:15.818426');
 
 -- Manga id of 1
 INSERT INTO "public"."manga" ("id", "mal_id", "main_title", "english_title", "japanese_title", "alternative_titles", "synopsis", "spoilers", "type", "volumes", "chapters", "status", "published", "serialization", "image_id", "created_at", "updated_at") VALUES ('1', '1', 'Monster', 'Monster', 'MONSTER', NULL, 'Dr. Kenzou Tenma is a renowned brain surgeon of Japanese descent working in Europe. Highly lauded by his peers as one of the great young minds that will revolutionize the field, he is blessed with a beautiful fiancée and is on the cusp of a big promotion in the hospital he works at. But all of that is about to change with a grave dilemma that Kenzou faces one night—whether to save the life of a small boy or that of the town''s mayor. Despite being pressured by his superiors to perform surgery on the mayor, his morals force him to perform the surgery on the other critical patient, saving his life and forfeiting the mayor''s. A doctor is taught to believe that all life is equal; however, when a series of murders occur in the surgeon''s vicinity, all of the evidence pointing to the boy he saved, Kenzou''s beliefs are shaken. Along his journey to unravel the true identity of his little patient, Kenzou discovers that the fate of the world may be intertwined with the mysterious child.', NULL, 'Manga', '18', '162', 'Finished', 'Dec  5, 1994 to Dec  20, 2001', 'Big Comic Original', '1', '2018-01-04 23:11:27.728984', '2018-01-04 23:11:27.728984');
--- INSERT INTO "public"."manga_author" ("manga_id", "person_id", "role", "created_at") VALUES ('1', '1729', 'Story & Art', '2018-01-12 15:52:33.533665');
-INSERT INTO "public"."manga_image" ("id", "manga_id", "image_path", "mal_link", "created_at") VALUES ('1', '1', 'dfc6432967-1.jpg', 'https://myanimelist.cdn-dena.com/images/manga/3/54525.jpg', '2018-01-08 20:30:58.632654');
+
 INSERT INTO "public"."manga_manga_genre" ("manga_id", "genre_id", "created_at") VALUES ('1', '7', '2018-01-07 13:34:00.903055');
 INSERT INTO "public"."manga_manga_genre" ("manga_id", "genre_id", "created_at") VALUES ('1', '8', '2018-01-07 13:34:00.903055');
 INSERT INTO "public"."manga_manga_genre" ("manga_id", "genre_id", "created_at") VALUES ('1', '40', '2018-01-07 13:34:00.903055');
@@ -2508,4 +2493,3 @@ INSERT INTO "public"."person" ("id", "mal_id", "first_name", "surname", "given_n
 Blood type: AB
 
 Twitter: @seki0908', '1', '2018-01-08 15:47:25.736265', '2018-01-08 15:47:25.736265');
-INSERT INTO "public"."person_image" ("id", "person_id", "image_path", "mal_link", "created_at") VALUES ('1', '1', 'e336ce6e2b-1.jpg', 'https://myanimelist.cdn-dena.com/images/voiceactors/3/44649.jpg', '2018-01-08 17:19:16.617714');
