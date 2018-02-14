@@ -23,7 +23,6 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "graphql": "^0.11.0",
-    "graphql-request": "^1.4.1",
     "helmet": "^3.9.0",
     "join-monster": "^2.0.15",
     "knex": "^0.14.2",

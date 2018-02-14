@@ -18,9 +18,11 @@ const Person = new GraphQLObjectType({
   ['uniqueKey' as string]: ['id'],
   fields: () => {
     return {
-      id: { type: new GraphQLNonNull(GraphQLID) },
+      id: {
+        type: new GraphQLNonNull(GraphQLID),
+      },
       malId: {
-        type: GraphQLInt,
+        type: new GraphQLNonNull(GraphQLID),
         sqlDeps: ['mal_id'],
         resolve: (person) => person.mal_id,
       },
