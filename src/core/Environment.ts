@@ -37,7 +37,7 @@ export const Environment = {
     output: process.env.LOG_OUTPUT as string,
   },
   graphql: {
-    route: process.env.GRAPHQL_ROUTE as string,
+    route: process.env.GRAPHQL_ROUTE as string || '/graphql',
     editor: process.env.GRAPHQL_EDITOR,
   },
   monitor: {
