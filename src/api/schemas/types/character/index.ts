@@ -1,6 +1,5 @@
 import {
   GraphQLID,
-  GraphQLInt,
   GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
@@ -32,7 +31,7 @@ const Character = new GraphQLObjectType({
         type: new GraphQLNonNull(GraphQLID),
       },
       malId: {
-        type: GraphQLInt,
+        type: new GraphQLNonNull(GraphQLID),
         sqlDeps: ['mal_id'],
         resolve: (character) => character.mal_id,
       },

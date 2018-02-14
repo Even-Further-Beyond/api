@@ -31,7 +31,7 @@ const Manga = new GraphQLObjectType({
         resolve: (manga) => manga.mal_id,
       },
       mainTitle: {
-        type: GraphQLString,
+        type: new GraphQLNonNull(GraphQLString),
         sqlDeps: ['main_title'],
         resolve: (manga) => manga.main_title,
       },
