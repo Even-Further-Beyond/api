@@ -5,6 +5,7 @@
   "main": "src/app.ts",
   "scripts": {
     "serve": "tsc && nodemon --watch src --watch .env",
+    "build": "tsc",
     "start": "node ./dist/app.js",
     "test": "mocha -r ts-node/register src/tests/**/*.spec.ts --exit",
     "integration": "mocha -r ts-node/register src/tests/integration/*.spec.ts --exit"

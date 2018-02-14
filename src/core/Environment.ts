@@ -24,12 +24,12 @@ export const Environment = {
     },
   },
   db: {
-    client: process.env.DB_TYPE,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    name: process.env.DB_NAME,
+    client: process.env.DB_TYPE || 'pg',
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 5432,
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD || '',
+    name: process.env.DB_NAME || 'acdb_1',
   },
   log: {
     level: process.env.LOG_LEVEL,
@@ -37,7 +37,7 @@ export const Environment = {
     output: process.env.LOG_OUTPUT as string,
   },
   graphql: {
-    route: process.env.GRAPHQL_ROUTE as string,
+    route: process.env.GRAPHQL_ROUTE as string || '/graphql',
     editor: process.env.GRAPHQL_EDITOR,
   },
   monitor: {

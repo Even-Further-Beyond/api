@@ -20,7 +20,7 @@ describe('Anime', () => {
     expect(animeType.getFields().malId.type).to.deep.equals(new GraphQLNonNull(GraphQLID));
   });
 
-  it('Should have an maintitle field of type GraphQLString', () => {
+  it('Should have an mainTitle field of type GraphQLString', () => {
     expect(animeType.getFields()).to.have.property('mainTitle');
     expect(animeType.getFields().mainTitle.type).to.deep.equals(GraphQLString);
   });
