@@ -3,9 +3,14 @@ language: node_js
 node_js:
   - "stable"
 
+services:
+  - postgresql
+
 before_script:
   - npm install
   - npm run build
+  - psql -c 'create database acdb_1;' -U postgres
+  - psql -U postgres -d acdb_1 -a -f ./sql/dump.sql
 
 scripts:
   - npm test
