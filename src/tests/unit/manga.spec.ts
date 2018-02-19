@@ -5,7 +5,7 @@ import {
 } from 'graphql';
 import { expect } from 'chai';
 
-import manga from '../../api/schemas/queries/manga';
+import manga from '../../api/schemas/queries/getMangaById';
 
 const mangaType = manga.type;
 

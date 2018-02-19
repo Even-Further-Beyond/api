@@ -5,7 +5,7 @@ import {
 } from 'graphql';
 import { expect } from 'chai';
 
-import anime from '../../api/schemas/queries/anime';
+import anime from '../../api/schemas/queries/getAnimeById';
 
 const animeType = anime.type;
 
