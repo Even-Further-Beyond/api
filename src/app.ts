@@ -1,6 +1,5 @@
 import * as winston from 'winston';
 import * as moment from 'moment';
-import * as Knex from 'knex';
 import * as bodyParser from 'body-parser';
 
 import { Application } from 'express';
@@ -11,6 +10,7 @@ import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import Logger from './core/Logger';
 import banner from './core/banner';
 import Environment from './core/Environment';
+import knex from './core/database';
 
 import Schema from './api/schemas';
 import Models from './api/models';
@@ -38,16 +38,6 @@ const expressApp: Application = createExpressServer({
 });
 
 expressApp.listen(Environment.app.port);
-
-const knex = Knex({
-  client: Environment.db.client,
-  connection: {
-    host: Environment.db.host,
-    user: Environment.db.user,
-    password: Environment.db.password,
-    database: Environment.db.name,
-  },
-});
 
 Model.knex(knex);
 

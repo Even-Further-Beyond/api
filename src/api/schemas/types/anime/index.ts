@@ -4,7 +4,12 @@ import {
   GraphQLList,
   GraphQLID,
   GraphQLString,
+  GraphQLInt,
 } from 'graphql';
+
+import { connectionDefinitions } from 'graphql-relay';
+
+import { nodeInterface } from '../Node';
 
 import AnimeGenre from './relations/AnimeGenre';
 import AnimeImage from './relations/AnimeImage';
@@ -21,6 +26,7 @@ const Anime = new GraphQLObjectType({
   description: 'Object containing anime information',
   ['sqlTable' as string]: 'anime',
   ['uniqueKey' as string]: 'id',
+  interfaces: [nodeInterface],
   fields: () => {
     return {
       id: {
@@ -183,6 +189,13 @@ const Anime = new GraphQLObjectType({
         resolve: (anime) => anime.updated_at,
       },
     };
+  },
+});
+
+export const { connectionType: AnimeConnection } = connectionDefinitions({
+  nodeType: Anime,
+  connectionFields: {
+    total: { type: GraphQLInt },
   },
 });
 

@@ -2,14 +2,14 @@ import joinMonster from 'join-monster';
 
 import { forwardConnectionArgs } from 'graphql-relay';
 
-import { MangaConnection } from '../types/manga';
+import { CharacterConnection } from '../types/character';
 import Logger from '../../../core/Logger';
 
 const logger = new Logger(__filename);
 
 export default {
-  type: MangaConnection,
-  description: 'Get multiple manga',
+  type: CharacterConnection,
+  description: 'Get multiple characters',
   args: forwardConnectionArgs,
   sqlPaginate: true,
   orderBy: {

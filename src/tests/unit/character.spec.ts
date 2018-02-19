@@ -5,7 +5,7 @@ import {
 } from 'graphql';
 import { expect } from 'chai';
 
-import character from '../../api/schemas/queries/character';
+import character from '../../api/schemas/queries/getCharacterById';
 
 const characterType = character.type;
 

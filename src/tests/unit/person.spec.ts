@@ -5,7 +5,7 @@ import {
 } from 'graphql';
 import { expect } from 'chai';
 
-import person from '../../api/schemas/queries/person';
+import person from '../../api/schemas/queries/getPersonById';
 
 const personType = person.type;
 

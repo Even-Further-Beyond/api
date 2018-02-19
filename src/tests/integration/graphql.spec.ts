@@ -15,7 +15,7 @@ describe('Integration', () => {
 
   it('Should resolve a character', () => {
     const query = `{
-      character(id: 1) {
+      getCharacterById(id: 1) {
         id
         malId
         name
@@ -23,7 +23,7 @@ describe('Integration', () => {
     }`;
 
     const expected = {
-      character: {
+      getCharacterById: {
         id: '1',
         malId: '1',
         name: 'Spike Spiegel',
@@ -40,7 +40,7 @@ describe('Integration', () => {
 
   it('Should resolve an anime', () => {
     const query = `{
-      anime(id: 1) {
+      getAnimeById(id: 1) {
         id
         malId
         mainTitle
@@ -48,7 +48,7 @@ describe('Integration', () => {
     }`;
 
     const expected = {
-      anime: {
+      getAnimeById: {
         id: '1',
         malId: '1',
         mainTitle: 'Cowboy Bebop',
@@ -65,7 +65,7 @@ describe('Integration', () => {
 
   it('Should resolve a manga', () => {
     const query = `{
-      manga(id: 1) {
+      getMangaById(id: 1) {
         id
         malId
         mainTitle
@@ -73,7 +73,7 @@ describe('Integration', () => {
     }`;
 
     const expected = {
-      manga: {
+      getMangaById: {
         id: '1',
         malId: '1',
         mainTitle: 'Monster',
@@ -90,7 +90,7 @@ describe('Integration', () => {
 
   it('Should resolve a person', () => {
     const query = `{
-      person(id: 1) {
+      getPersonById(id: 1) {
         id
         malId
         firstName
@@ -98,7 +98,7 @@ describe('Integration', () => {
     }`;
 
     const expected = {
-      person: {
+      getPersonById: {
         id: '1',
         malId: '1',
         firstName: 'Tomokazu',
