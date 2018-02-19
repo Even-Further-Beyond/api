@@ -1,20 +1,19 @@
-import { GraphQLID } from 'graphql';
-import * as escape from 'pg-escape';
 import joinMonster from 'join-monster';
 
-import Anime from '../types/anime';
+import { forwardConnectionArgs } from 'graphql-relay';
+
+import { AnimeConnection } from '../types/anime';
 import Logger from '../../../core/Logger';
 
 const logger = new Logger(__filename);
 
 export default {
-  type: Anime,
-  description: 'Get a single anime by id',
-  args: { id: { type: GraphQLID } },
-  where: (animeTable, args) => {
-    if (args.id) {
-      return escape(`${animeTable}.id = %L`, args.id);
-    }
+  type: AnimeConnection,
+  description: 'Get multiple anime',
+  args: forwardConnectionArgs,
+  sqlPaginate: true,
+  orderBy: {
+    id: 'asc',
   },
   resolve: (parent, args, { knex }, info) => {
     return joinMonster(info, {}, sql => {

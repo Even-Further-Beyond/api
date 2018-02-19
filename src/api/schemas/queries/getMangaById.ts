@@ -1,19 +1,20 @@
+import { GraphQLID } from 'graphql';
+import * as escape from 'pg-escape';
 import joinMonster from 'join-monster';
 
-import { forwardConnectionArgs } from 'graphql-relay';
-
-import { MangaConnection } from '../types/manga';
+import Manga from '../types/manga';
 import Logger from '../../../core/Logger';
 
 const logger = new Logger(__filename);
 
 export default {
-  type: MangaConnection,
-  description: 'Get multiple manga',
-  args: forwardConnectionArgs,
-  sqlPaginate: true,
-  orderBy: {
-    id: 'asc',
+  type: Manga,
+  description: 'Get a single manga by id',
+  args: { id: { type: GraphQLID } },
+  where: (mangaTable, args) => {
+    if (args.id) {
+      return escape(`${mangaTable}.id = %L`, args.id);
+    }
   },
   resolve: (parent, args, { knex }, info) => {
     return joinMonster(info, {}, sql => {

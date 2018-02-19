@@ -4,7 +4,12 @@ import {
   GraphQLID,
   GraphQLList,
   GraphQLString,
+  GraphQLInt,
 } from 'graphql';
+
+import { connectionDefinitions } from 'graphql-relay';
+
+import { nodeInterface } from '../Node';
 
 import PersonImage from './relations/PersonImage';
 
@@ -15,6 +20,7 @@ const Person = new GraphQLObjectType({
   description: 'Object containing person information',
   ['sqlTable' as string]: 'person',
   ['uniqueKey' as string]: ['id'],
+  interfaces: [nodeInterface],
   fields: () => {
     return {
       id: {
@@ -82,6 +88,13 @@ const Person = new GraphQLObjectType({
         resolve: (person) => person.updated_at,
       },
     };
+  },
+});
+
+export const { connectionType: PersonConnection } = connectionDefinitions({
+  nodeType: Person,
+  connectionFields: {
+    total: { type: GraphQLInt },
   },
 });
 

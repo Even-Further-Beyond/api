@@ -4,7 +4,12 @@ import {
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString,
+  GraphQLInt,
 } from 'graphql';
+
+import { connectionDefinitions } from 'graphql-relay';
+
+import { nodeInterface } from '../Node';
 
 import Gender from './traits/Gender';
 import HairLength from './traits/HairLength';
@@ -25,6 +30,7 @@ const Character = new GraphQLObjectType({
   description: 'Object containing character information',
   ['sqlTable' as string]: 'character',
   ['uniqueKey' as string]: 'id',
+  interfaces: [nodeInterface],
   fields: () => {
     return {
       id: {
@@ -186,6 +192,13 @@ const Character = new GraphQLObjectType({
         resolve: (character) => character.updated_at,
       },
     };
+  },
+});
+
+export const { connectionType: CharacterConnection } = connectionDefinitions({
+  nodeType: Character,
+  connectionFields: {
+    total: { type: GraphQLInt },
   },
 });
 

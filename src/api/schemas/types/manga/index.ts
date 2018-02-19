@@ -7,6 +7,10 @@ import {
   GraphQLString,
 } from 'graphql';
 
+import { connectionDefinitions } from 'graphql-relay';
+
+import { nodeInterface } from '../Node';
+
 import MangaGenre from './relations/MangaGenre';
 import MangaImage from './relations/MangaImage';
 import MangaAuthor from './relations/MangaAuthor';
@@ -20,6 +24,7 @@ const Manga = new GraphQLObjectType({
   description: 'Object containing manga information',
   ['sqlTable' as string]: 'manga',
   ['uniqueKey' as string]: 'id',
+  interfaces: [nodeInterface],
   fields: () => {
     return {
       id: {
@@ -136,6 +141,13 @@ const Manga = new GraphQLObjectType({
         resolve: (manga) => manga.updated_at,
       },
     };
+  },
+});
+
+export const { connectionType: MangaConnection } = connectionDefinitions({
+  nodeType: Manga,
+  connectionFields: {
+    total: { type: GraphQLInt },
   },
 });
 
