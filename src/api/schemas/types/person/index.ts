@@ -36,10 +36,10 @@ const Person = new GraphQLObjectType({
         sqlDeps: ['first_name'],
         resolve: (person) => person.first_name,
       },
-      lastName: {
+      surname: {
         type: GraphQLString,
-        sqlDeps: ['last_name'],
-        resolve: (person) => person.last_name,
+        sqlDeps: ['surname'],
+        resolve: (person) => person.surname,
       },
       givenName: {
         type: GraphQLString,
