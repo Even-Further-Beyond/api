@@ -37,7 +37,7 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "routing-controllers": "^0.7.6",
-    "winston": "^2.4.0"
+    "winston": "^3.1.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",
