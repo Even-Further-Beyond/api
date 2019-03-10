@@ -25,7 +25,7 @@
     "express": "^4.16.2",
     "graphql-relay": "^0.5.4",
     "graphql": "^14.0.0-rc.2",
-    "helmet": "^3.9.0",
+    "helmet": "^3.16.0",
     "join-monster": "^2.0.15",
     "knex": "^0.14.2",
     "lodash": "^4.17.4",
